@@ -53,7 +53,58 @@ function playRound(computerSelection, playerSelection) {
     else { result = 'Something is wrong' }
     return result
 }
-const playerSelection = prompt('What is your choice?')
+const computerResult = document.querySelector('.result.computer')
+const humanResult = document.querySelector('.result.human')
+const buttons = document.querySelectorAll('.content button')
+const finalResult = document.querySelector('#final-result')
+const pageRoundResult = document.querySelector('#round-result')
+const againButton = document.querySelector('.again')
+
+let  playAndUpdateScore = function () {
+    let playerSelection = this.id;
+    const computerSelection = computerPlay();
+    const roundResoult = playRound(computerSelection, playerSelection);
+    pageRoundResult.textContent = roundResoult
+    if (roundResoult.includes('You Win!')) {
+        humanResult.textContent = +humanResult.textContent + 1;
+        if (humanResult.textContent == 5) { finalResult.textContent = 'You Won! good game'
+        finalResult.style.color = 'green';
+        buttons.forEach((button) => {
+            button.removeEventListener('click', playAndUpdateScore
+        )
+        })
+        againButton.classList.remove('hidden')
+    }
+    }
+    if (roundResoult.includes('You Lose!')) {
+        computerResult.textContent = +computerResult.textContent + 1;
+        if (computerResult.textContent == 5) { finalResult.textContent = 'You Lost! better luck next time'
+        finalResult.style.color = 'red';
+        buttons.forEach((button) => {
+            button.removeEventListener('click', playAndUpdateScore
+        )
+        })
+        againButton.classList.remove('hidden')
+    }
+
+    }
+}
+againButton.addEventListener('click', () => {
+    againButton.classList.add('hidden')
+    humanResult.textContent = 0
+    computerResult.textContent = 0
+    finalResult.textContent = ''
+    pageRoundResult.textContent = ''
+    startGame()
+})
+function startGame() {
+   buttons.forEach((button) => {
+    button.addEventListener('click', playAndUpdateScore
+)
+}) 
+}
+startGame()
+
 function game(numberOfGames) {
     for (let i = 0; i < numberOfGames; i++) {
         function newLi() {
@@ -61,12 +112,9 @@ function game(numberOfGames) {
             }
 
         const computerSelection = computerPlay()  
-        //content.textContent +=  playRound(computerSelection, playerSelection) ;
         let li = document.createElement('li');
         li.textContent = playRound(computerSelection, playerSelection) ;
-        ulList.appendChild(li)
         
         
     }
 }
-game(5)

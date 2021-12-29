@@ -1,4 +1,17 @@
-const ulList = document.querySelector('#result')
+const rockElement = document.querySelector('#Rock');
+const paperElement = document.querySelector('#Paper');
+const scissorsElement = document.querySelector('#Scissors');
+
+const rockElementClone = rockElement.cloneNode(true);
+const rockElementClone2 = rockElement.cloneNode(true);
+const paperElementClone = paperElement.cloneNode(true);
+const paperElementClone2 = paperElement.cloneNode(true);
+const scissorsElementClone = scissorsElement.cloneNode(true);
+const scissorsElementClone2 = scissorsElement.cloneNode(true);
+
+const playerRoundResultImg = document.querySelector('#player-choice div');
+const computerRoundResultImg = document.querySelector('#computer-choice div');
+
 function computerPlay() {
     let computerChoice
     let randomNumber = Math.floor(Math.random() * 3)
@@ -12,41 +25,59 @@ function computerPlay() {
     return computerChoice
 }
 function playRound(computerSelection, playerSelection) {
+    playerRoundResultImg.innerHTML = '';
+    computerRoundResultImg.innerHTML = '';
     let result;
     playerSelection = playerSelection.toLowerCase()
     if (playerSelection == 'rock') {
+        playerRoundResultImg.append(rockElementClone);
         if (computerSelection == 'Rock') {
             result = "Draw! Rock ties with Rock"
+            computerRoundResultImg.append(rockElementClone2);
         }
         else if (computerSelection == 'Paper') {
             result = "You Lose! Paper beats Rock"
+            computerRoundResultImg.append(paperElementClone);
         }
         else {
             result = "You Win! Rock beats Scissors"
+            computerRoundResultImg.append(scissorsElementClone);
         }
 
     }
     else if (playerSelection == 'paper') {
+        playerRoundResultImg.append(paperElementClone);
+
         if (computerSelection == 'Rock') {
             result = "You Win! Paper beats Rock"
+            computerRoundResultImg.append(rockElementClone);
+
         }
         else if (computerSelection == 'Paper') {
             result = "Draw! Paper ties with Paper"
+            computerRoundResultImg.append(paperElementClone2);
         }
         else {
             result = "You Lose! Scissors beats Paper"
+            computerRoundResultImg.append(scissorsElementClone);
         }
 
     }
     else if (playerSelection == 'scissors') {
+        playerRoundResultImg.append(scissorsElementClone);
+
         if (computerSelection == 'Rock') {
             result = "You Lose! Rock beats Scissors"
+            computerRoundResultImg.append(rockElementClone);
+
         }
         else if (computerSelection == 'Paper') {
             result = "You Win! Scissors beats Paper"
+            computerRoundResultImg.append(paperElementClone);
         }
         else {
             result = "Draw! Scissors ties with Scissors"
+            computerRoundResultImg.append(scissorsElementClone2);
         }
 
     }
@@ -59,6 +90,7 @@ const buttons = document.querySelectorAll('.content button')
 const finalResult = document.querySelector('#final-result')
 const pageRoundResult = document.querySelector('#round-result')
 const againButton = document.querySelector('.again')
+
 
 let  playAndUpdateScore = function () {
     let playerSelection = this.id;
@@ -95,6 +127,8 @@ againButton.addEventListener('click', () => {
     computerResult.textContent = 0
     finalResult.textContent = ''
     pageRoundResult.textContent = ''
+    playerRoundResultImg.innerHTML = '';
+    computerRoundResultImg.innerHTML = '';
     startGame()
 })
 function startGame() {
@@ -118,3 +152,5 @@ function game(numberOfGames) {
         
     }
 }
+
+
